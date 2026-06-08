@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import * as ScreenCapture from 'expo-screen-capture';
+import { preventCapture, allowCapture } from '@/utils/screenCapture';
 import { useStore } from '@/store/useStore';
 import { getDeviceId } from '@/utils/device';
 import Colors from '@/constants/Colors';
@@ -35,10 +35,10 @@ export default function TakeExamScreen() {
   // Prevent screen capture during exam
   useEffect(() => {
     if (phase === 'exam' && exam?.preventScreenCapture) {
-      ScreenCapture.preventScreenCaptureAsync('exam');
+      preventCapture('exam');
     }
     return () => {
-      ScreenCapture.allowScreenCaptureAsync('exam');
+      allowCapture('exam');
     };
   }, [phase]);
 
@@ -118,7 +118,7 @@ export default function TakeExamScreen() {
     setPhase('submitted');
 
     if (!auto) {
-      ScreenCapture.allowScreenCaptureAsync('exam');
+      allowCapture('exam');
     }
   }, [attemptId, exam, answers]);
 

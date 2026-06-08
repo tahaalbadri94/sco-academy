@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-import * as ScreenCapture from 'expo-screen-capture';
+import { preventCapture, allowCapture } from '@/utils/screenCapture';
 import { useStore } from '@/store/useStore';
 import Colors from '@/constants/Colors';
 import { Lesson } from '@/store/types';
@@ -17,9 +17,9 @@ export default function StudentCourseDetailScreen() {
 
   // Prevent screen capture when viewing course content
   useEffect(() => {
-    ScreenCapture.preventScreenCaptureAsync('course_view');
+    preventCapture('course_view');
     return () => {
-      ScreenCapture.allowScreenCaptureAsync('course_view');
+      allowCapture('course_view');
     };
   }, []);
 
